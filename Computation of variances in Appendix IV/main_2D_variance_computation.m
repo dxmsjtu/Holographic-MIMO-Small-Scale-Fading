@@ -11,12 +11,7 @@
 %License: This code is licensed under the GPLv2 license. If you in any way
 %use this code for research that results in publications, please cite our
 %original article listed above.
-
-
-clear;
-close all;
-clc;
-
+clear all; close all;   %clc;
 %% Parameters
 %array size in number of wavelenghts (must be integer)
 Lx = 16;
@@ -32,11 +27,34 @@ variances = asin((l_vec+1)/Lx) - asin(l_vec/Lx);
 variances_norm = variances/max(variances);
 
 %plot the variances in dB within the support segment
-figure;
+figure;FontSize =28;
 plot(l_vec,10*log10(variances_norm));
 xlabel('$\ell$','Interpreter','Latex');
 ylabel('$\sigma^2_{\ell}$ (dB)','Interpreter','Latex');
 xlim([-Lx Lx])
 grid on; box on;
-set(gca,'FontSize',20);
+set(gca,'FontSize',FontSize);
+set(gcf, 'Position', get(0, 'Screensize'));
+% % 生成随机信号
+% t = 0:0.1:10; % 时间向量
+% x = sin(2*pi*0.5*t) + 0.5*randn(size(t)); % 添加噪声的正弦信号
+% 
+% % 计算相关矩阵
+% C = cov(x); % 计算协方差矩阵
+% 
+% % 计算特征值和特征向量
+% [V, D] = eig(C); % V 中包含特征向量，D 中包含特征值
+% 
+% % 选择主要成分
+% coeff = V' * x; % 计算主要成分系数
+% 
+% % 重构信号
+% x_reconstructed = V * coeff;
+% 
+% % 绘制原始信号和重构信号
+% plot(t, x, 'b', t, x_reconstructed, 'r--');
+% legend('原始信号', '重构信号');
+% xlabel('时间');
+% ylabel('幅值');
+% title('K-L级数重构示例');
 
